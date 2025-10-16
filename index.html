@@ -34,40 +34,13 @@
   </div>
 
   <script>
-    // === 1. URL dan username ni olish ===
     const path = window.location.pathname.replace(/^\/+|\/+$/g, '');
-    const username = path || 'home'; // agar bo'sh bo'lsa, fallback
+    const username = path || 'home';
     const tgUrl = 'https://t.me/' + encodeURIComponent(username);
     document.getElementById('info').textContent = '@' + username;
-
-    // === 2. Oddiy bot tekshiruvi ===
-    const isBot = (() => {
-      const ua = (navigator.userAgent || '').toLowerCase();
-      return (
-        navigator.webdriver ||
-        /bot|crawl|spider|slurp|curl|wget|python|httpclient|java/.test(ua)
-      );
-    })();
-
-    // === 3. Foydalanuvchini yo'naltirish yoki tugma orqali o'tkazish ===
     const btn = document.getElementById('openBtn');
     btn.onclick = () => (window.location.href = tgUrl);
-
-    if (!isBot) {
-      // avtomatik o‘tkazish
-      setTimeout(() => {
-        try {
-          window.location.replace(tgUrl);
-        } catch {
-          window.location.href = tgUrl;
-        }
-      }, 300); // 0.3 soniyada
-    } else {
-      // bot uchun faqat qo‘lda ochish
-      document.getElementById('status').textContent = 'Avtomatik o‘tish o‘chirildi';
-      document.getElementById('desc').textContent =
-        'Iltimos, Telegram sahifasini ochish uchun tugmani bosing.';
-    }
+    setTimeout(() => window.location.replace(tgUrl), 300);
   </script>
 </body>
 </html>
